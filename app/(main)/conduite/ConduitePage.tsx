@@ -36,7 +36,7 @@ const ConduitePage: React.FC = () => {
         if (crew.position === "NAKHODA") {
           setSelectedRole("CRW-NKD");
         } else if (crew.position === "KKM") {
-          setSelectedRole("CRW-NKD");
+          setSelectedRole("CRW-KKM");
         }
       } else {
         router.push(`/auth`);
