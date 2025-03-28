@@ -63,6 +63,7 @@ const DialogInputScoreConduite = ({
   const [selectedDescIna, setSelectedDescIna] = useState<string | null>(null);
   const [selectedDescEng, setSelectedDescEng] = useState<string | null>(null);
   const [selectedScore, setSelectedScore] = useState<number | null>(null);
+  const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
   const {
     setValue,
@@ -145,6 +146,13 @@ const DialogInputScoreConduite = ({
 
   const onSubmit = async (data: createVwCrewConduiteDetail) => {
     setLoading(true);
+
+    if (!selectedId) {
+      setErrorMessage("Harap pilih salah satu skor sebelum menyimpan.");
+      setLoading(false);
+      return;
+    }
+
     const finalData: createVwCrewConduiteDetail = {
       ...data, // Data dari form
       score: selectedScore || 0, // ID skor yang dipilih
@@ -171,6 +179,9 @@ const DialogInputScoreConduite = ({
               data={listMasterAspect}
               columns={columnsDetail}
             />
+            {errorMessage && (
+              <div className="text-red-500 text-sm mt-2">{errorMessage}</div>
+            )}
           </CardContent>
         </Card>
         <Card className="mt-1">
