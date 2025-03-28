@@ -85,6 +85,7 @@ const DialogCrewConduite = ({
     number | null
   >(null);
   const [isInputScore, setIsInputScore] = useState<boolean>(false);
+  const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
   const {
     setValue,
@@ -282,6 +283,18 @@ const DialogCrewConduite = ({
   }
 
   const onSubmit = async (model: createVwCrewConduite) => {
+    const hasInvalidScore = modelDetail.some(
+      (item) => !item.score || item.score === 0 || item.score === null
+    );
+
+    if (hasInvalidScore) {
+      setErrorMessage(
+        "Terdapat skor dengan nilai 0 atau kosong. Harap periksa kembali."
+      );
+      setLoading(false);
+      return;
+    }
+
     const requestData = { model, modelDetail };
     try {
       const response = await saveTrConduite(requestData);
@@ -458,6 +471,11 @@ const DialogCrewConduite = ({
                 <CardTitle>Daftar Penilaian</CardTitle>
               </CardHeader>
               <CardContent>
+                {errorMessage && (
+                  <div className="text-red-500 text-sm mt-2">
+                    {errorMessage}
+                  </div>
+                )}
                 <DataTableCrewConduiteDetail
                   data={modelDetail}
                   columns={columnsDetail}
