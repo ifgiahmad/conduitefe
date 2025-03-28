@@ -66,7 +66,6 @@ const ConduitePage: React.FC = () => {
       header: " ",
       cell: (info: CellContext<VwConduite, unknown>) => {
         const row = info.row.original;
-        console.log(row);
         return (
           <button
             onClick={() =>
